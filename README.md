@@ -1,6 +1,8 @@
-# mcworld
+# ShittimCraft
 
 **Minecraft 搬进蔚蓝档案（Blue Archive）的客户端里。**
+
+插件代号 `mcworld`，编译产物是 `SchaleMcWorld.dll`。
 
 一个 BepInEx 6（IL2CPP）插件，在游戏进程内重建一层 Minecraft 玩法：史蒂夫、方块世界、破坏与放置、快捷栏、背包、第一人称视角和斜俯视地牢相机。不是外挂，不改服务端数据，纯粹在客户端加一层可开关的世界。
 
@@ -158,7 +160,7 @@ MIT License。
 
 ### What this is
 
-Blue Archive runs on Unity + IL2CPP. This plugin injects a managed layer through BepInEx and then:
+The plugin is called `mcworld`, and it builds to `SchaleMcWorld.dll`. Blue Archive runs on Unity + IL2CPP; the plugin injects a managed layer through BepInEx and then:
 
 - spawns a **Steve** in the battle scene — 1.8 blocks tall, arms and legs swinging
 - builds a **block world** on top of it: nine block types, place and break, mesh generated at runtime
