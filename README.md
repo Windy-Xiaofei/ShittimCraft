@@ -67,8 +67,6 @@ python scripts/fetch-textures.py "C:\Users\<你>\AppData\Roaming\.minecraft\vers
 
 或者手动把 `assets/minecraft/textures/block/` 下的同名 png 复制到 `textures\`。缺贴图插件也能跑，只是方块变成纯色。
 
-装好后启动游戏，BepInEx 控制台会打印 `ShittimCraft` 的加载日志；游戏的 BepInEx 插件列表里也是这个名字。
-
 ### 操作
 
 | 按键 | 作用 |
@@ -214,8 +212,6 @@ python scripts/fetch-textures.py "C:\Users\<you>\AppData\Roaming\.minecraft\vers
 ```
 
 The plugin still runs without them — blocks just come out flat-coloured.
-
-Once installed, launch the game and the BepInEx console prints the load line for `ShittimCraft`; that is the name you will see in the plugin list too.
 
 ### Controls
 

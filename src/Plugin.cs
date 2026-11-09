@@ -14,7 +14,7 @@ namespace SchaleMcWorld
     /// Rebuilds a Minecraft-style play layer *inside* the Blue Archive client:
     /// a Steve character, block placing/breaking, a dungeon camera and a first-person mode.
     /// </summary>
-    [BepInPlugin(Guid, "ShittimCraft", "0.9.5")]
+    [BepInPlugin(Guid, "Schale MC World", "0.9.5")]
     public class Plugin : BasePlugin
     {
         public const string Guid = "com.shittim.ba.mcworld";
