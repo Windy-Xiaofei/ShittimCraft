@@ -78,10 +78,12 @@ python scripts/fetch-textures.py "C:\Users\<你>\AppData\Roaming\.minecraft\vers
 | **左键** | 挖方块 / 挥剑 |
 | **右键** | 放置方块 |
 | **1 – 9** | 选快捷栏 |
-| **T** | 打开指令栏 |
+| **T** 或 **/** | 打开指令栏 |
+| **Tab** | 第一人称下锁定 / 释放鼠标 |
+| **Q** | 切换 互动 / 破坏 模式 |
 | **鼠标滚轮** | 切换方块 |
 
-第一人称下鼠标默认锁定视角，按一次 `Alt` 之类的自由键可以释放光标（见配置项）。
+第一人称下鼠标默认锁定视角，按 **Tab** 释放光标去点游戏本来的界面。
 
 ### 指令
 
@@ -222,7 +224,9 @@ The plugin still runs without them — blocks just come out flat-coloured.
 | **Left click** | mine / swing |
 | **Right click** | place |
 | **1 – 9** | hotbar slot |
-| **T** | command bar |
+| **T** or **/** | command bar |
+| **Tab** | grab / release the mouse in first person |
+| **Q** | toggle interact / destroy |
 | **Wheel** | cycle blocks |
 
 ### Commands
