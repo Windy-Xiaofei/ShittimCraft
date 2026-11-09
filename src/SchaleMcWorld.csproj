@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>SchaleMcWorld</AssemblyName>
+    <RootNamespace>SchaleMcWorld</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <NoWarn>CS0436;NU1701</NoWarn>
+    <Version>0.9.5</Version>
+  </PropertyGroup>
+
+  <!--
+    Where the Blue Archive install lives. Resolution order:
+      1. dotnet build -p:GameDir="D:\path\to\BlueArchive"
+      2. environment variable BLUEARCHIVE_DIR
+      3. the usual Steam library locations, if one actually contains the game
+
+    The build needs BepInEx already installed in that folder: BepInEx\core\*.dll and,
+    more importantly, BepInEx\interop\BlueArchive.dll. The interop folder only appears
+    after the game has been launched once with BepInEx present.
+  -->
+  <PropertyGroup>
+    <GameDir Condition="'$(GameDir)' == '' and '$(BLUEARCHIVE_DIR)' != ''">$(BLUEARCHIVE_DIR)</GameDir>
+    <GameDir Condition="'$(GameDir)' == '' and Exists('C:\Program Files (x86)\Steam\steamapps\common\BlueArchive\BlueArchive.exe')">C:\Program Files (x86)\Steam\steamapps\common\BlueArchive</GameDir>
+    <GameDir Condition="'$(GameDir)' == '' and Exists('D:\SteamLibrary\steamapps\common\BlueArchive\BlueArchive.exe')">D:\SteamLibrary\steamapps\common\BlueArchive</GameDir>
+    <GameDir Condition="'$(GameDir)' == '' and Exists('E:\SteamLibrary\steamapps\common\BlueArchive\BlueArchive.exe')">E:\SteamLibrary\steamapps\common\BlueArchive</GameDir>
+  </PropertyGroup>
+
+  <Target Name="CheckGameDir" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(GameDir)' == ''"
+           Text="GameDir is not set. Pass -p:GameDir=&quot;X:\path\to\BlueArchive&quot; or set the BLUEARCHIVE_DIR environment variable." />
+    <Error Condition="!Exists('$(GameDir)\BepInEx\core\BepInEx.Core.dll')"
+           Text="BepInEx not found under $(GameDir). Install BepInEx 6 (IL2CPP, be.7xx) into the game folder first." />
+    <Error Condition="!Exists('$(GameDir)\BepInEx\interop\BlueArchive.dll')"
+           Text="BepInEx\interop is empty. Launch the game once so BepInEx can generate the IL2CPP assemblies, then build again." />
+  </Target>
+
+  <ItemGroup>
+    <Reference Include="BepInEx.Core"><HintPath>$(GameDir)\BepInEx\core\BepInEx.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx.Unity.IL2CPP"><HintPath>$(GameDir)\BepInEx\core\BepInEx.Unity.IL2CPP.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(GameDir)\BepInEx\core\0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Il2CppInterop.Runtime"><HintPath>$(GameDir)\BepInEx\core\Il2CppInterop.Runtime.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Il2Cppmscorlib"><HintPath>$(GameDir)\BepInEx\interop\Il2Cppmscorlib.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Il2CppSystem"><HintPath>$(GameDir)\BepInEx\interop\Il2CppSystem.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UIModule"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.UIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.AssetBundleModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(GameDir)\BepInEx\interop\UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BlueArchive"><HintPath>$(GameDir)\BepInEx\interop\BlueArchive.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <!-- Drop the built dll straight into the plugin folder when the game is present. -->
+  <Target Name="CopyToGame" AfterTargets="Build" Condition="Exists('$(GameDir)\BepInEx\plugins')">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameDir)\BepInEx\plugins" ContinueOnError="true" />
+  </Target>
+
+</Project>

@@ -1,0 +1,20 @@
+# Build output
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# BepInEx generates this log next to the plugin
+BepInEx/
+selftest.log
+
+# Textures placed by users from their own Minecraft install
+assets/textures/*.png
+!assets/textures/.gitkeep
+
+# Editors
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
